@@ -1,10 +1,10 @@
-###################### SESIÓN 5: SERIES DE TIEMPO #######################
+###################### SESI?N 5: SERIES DE TIEMPO #######################
 ################################################################################
-## EJEMPLO 1: CONEXIÓN ENTRE RSTUDIO Y GITHUB
+## EJEMPLO 1: CONEXI?N ENTRE RSTUDIO Y GITHUB
 
 
 ################################################################################
-## EJEMPLO 2: CONEXIÓN A UNA BDD CON R
+## EJEMPLO 2: CONEXI?N A UNA BDD CON R
 
 # Comenzaremos instalando las librerias necesarias para realizar la conexion y 
 # lectura de la base de datos en RStudio. Si previamente los tenias instalados 
@@ -17,10 +17,10 @@ library(DBI)
 library(RMySQL)
 
 # Una vez que se tengan las librerias necesarias se procede a la lectura 
-# (podrá ser que necesites otras, si te las solicita instalalas y cargalas). 
+# (podr? ser que necesites otras, si te las solicita instalalas y cargalas). 
 # De la base de datos de Shiny, la cual es un demo y nos permite interactuar con 
 # este tipo de objetos. El comando dbConnect es el indicado para realizar la 
-# lectura, los demás parámetros son los que nos dan acceso a la BDD.
+# lectura, los dem?s par?metros son los que nos dan acceso a la BDD.
 
 MyDataBase <- dbConnect(
   drv = RMySQL::MySQL(),
@@ -49,7 +49,7 @@ class(DataDB)
 head(DataDB)
 
 
-pop.mean <- mean(DataDB$Population)  # Media a la variable de población
+pop.mean <- mean(DataDB$Population)  # Media a la variable de poblaci?n
 pop.mean 
 
 pop.3 <- pop.mean *3   # Operaciones aritmeticas
@@ -70,6 +70,23 @@ dbDisconnect(MyDataBase)
 
 ################################################################################
 ## RETO 01: RSTUDIO CLOUD -> GITHUB
+library(ggplot2)
+
+MyDataBase<-dbConnect(
+  drv=RMySQL::MySQL(),
+  dbname="shinydemo",
+  host="shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
+  username="guest",
+  password="guest")
+dbListTables(MyDataBase)
+dbListFields(MyDataBase, 'CountryLanguage')
+DataDB<-dbGetQuery(MyDataBase, "select * from CountryLanguage")
+names(DataDB)
+SP<-DataDB%>% filter(Language=="Spanish")
+SP.df<-as.data.frame(SP) 
+SP.df%>% ggplot(aes( x=CountryCode, y=Percentage, fill=IsOfficial)) +geom_bin2d() +coord_flip()
+# Nos desconectamos de la base de datos
+dbDisconnect(MyDataBase)
 
 ################################################################################
 ## EJEMPLO 3: VARIANTES EN LA LECTURA DE BDD CON R
@@ -78,7 +95,7 @@ dbDisconnect(MyDataBase)
 # de dplyr que sustituye a SELECT en MySQL y el operador %>%, hay que recordar 
 # que con este comando tambienn podemos realizar busquedas de forma local.
 
-# Comenzamos instalando las paqueterias necesarias y cargándolas a R
+# Comenzamos instalando las paqueterias necesarias y carg?ndolas a R
 
 install.packages("pool")
 install.packages("dbplyr")
@@ -87,7 +104,7 @@ library(dplyr)
 library(pool)
 library(dbplyr)
 
-# Se realiza la lectura de la BDD con el comando dbPool, los demás parámetros 
+# Se realiza la lectura de la BDD con el comando dbPool, los dem?s par?metros 
 # se siguen utilizando igual que el ejemplo anterior.
 
 # La diferencia con el ejemplo anterior, es que en este caso no necesitamos 
@@ -101,7 +118,7 @@ my_db <- dbPool(
   password = "guest"
 )
 
-# Para ver el contenido de la BDD y realizar una búsqueda se procede de la 
+# Para ver el contenido de la BDD y realizar una b?squeda se procede de la 
 # siguiente manera
 
 dbListTables(my_db)
@@ -114,7 +131,7 @@ my_db %>% tbl("Country") %>% head(5) # library(dplyr)
 
 my_db %>% tbl("CountryLanguage") %>% head(5)
 
-# Otra forma de generar una búsqueda sería con la libreria DBI, utilizando el 
+# Otra forma de generar una b?squeda ser?a con la libreria DBI, utilizando el 
 # comando dbSendQuery
 
 conn <- dbConnect(
@@ -142,7 +159,7 @@ install.packages("rjson")
 library(rjson)
 
 # Json
-# Vamos a leer un archivo Json de prueba alojado aquí
+# Vamos a leer un archivo Json de prueba alojado aqu?
 
 URL <- "https://tools.learningcontainer.com/sample-json-file.json" # Asignando el link a una variable
 
@@ -161,7 +178,7 @@ sqrt(JsonData$Mobile)
 # es decir, JsonData$
 
 # XML
-# Ahora vamos a leer datos XML en R, utilizando un archivo XML alojado aquí
+# Ahora vamos a leer datos XML en R, utilizando un archivo XML alojado aqu?
 
 # Lo primero es instalar y cargar el paquete XML y alojar el link
 # en una variable para su lectura
@@ -188,7 +205,7 @@ xml_df <- data.frame(t(topxml), row.names= NULL)
 
 str(xml_df) # Observar la naturaleza de las variables del DF
 
-# Convertiremos incluso las variables de PRICE y YEAR en datos numéricos para 
+# Convertiremos incluso las variables de PRICE y YEAR en datos num?ricos para 
 # poder realizar operaciones con este dato
 
 xml_df$PRICE <- as.numeric(xml_df$PRICE) 
@@ -202,13 +219,13 @@ data_df <- xmlToDataFrame(link)
 head(data_df)
 
 # Tablas en HTML
-# Comenzamos instalando el paquete rvest el cual nos permitirá realizar la 
+# Comenzamos instalando el paquete rvest el cual nos permitir? realizar la 
 # lectura de la tabla en el HTML
 
 install.packages("rvest")
 library(rvest)
 
-# Introducimos una dirección URL donde se encuentre una tabla
+# Introducimos una direcci?n URL donde se encuentre una tabla
 theurl <- "https://solarviews.com/span/data2.htm"
 
 file <- read_html(theurl)    # Leemos el html
@@ -216,10 +233,10 @@ file <- read_html(theurl)    # Leemos el html
 # Selecciona pedazos dentro del HTML para identificar la tabla
 tables <- html_nodes(file, "table")  
 
-# Hay que analizar 'tables' para determinar cual es la posición en la lista 
+# Hay que analizar 'tables' para determinar cual es la posici?n en la lista 
 # que contiene la tabla, en este caso es la no. 4
 
-# Extraemos la tabla de acuerdo a la posición en la lista
+# Extraemos la tabla de acuerdo a la posici?n en la lista
 
 table1 <- html_table(tables[4], fill = TRUE)
 
@@ -234,7 +251,7 @@ table$Albedo <- as.numeric(table$Albedo)
 str(table)
 
 ################################################################################
-## RETO 2: EXTRACCIÓN DE TABLAS EN UN HTML
+## RETO 2: EXTRACCI?N DE TABLAS EN UN HTML
 
 ################################################################################
 ## POSTWORK
