@@ -88,6 +88,7 @@ SP.df%>% ggplot(aes( x=CountryCode, y=Percentage, fill=IsOfficial)) +geom_bin2d(
 # Nos desconectamos de la base de datos
 dbDisconnect(MyDataBase)
 
+
 ################################################################################
 ## EJEMPLO 3: VARIANTES EN LA LECTURA DE BDD CON R
 
